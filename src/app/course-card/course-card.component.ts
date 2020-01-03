@@ -22,10 +22,24 @@ export class CourseCardComponent implements OnInit {
   ngOnInit() {
   }
 
+  isImageVisible() {
+    return this.course && this.course.iconUrl
+  }
+
   onCourseViewed() {
     console.log("card component")
 
     this.courseEmitter.emit(this.course)
+  }
+
+  cardClasses() {
+    if (this.course.category == 'BEGINNER') {
+      return 'beginner'
+    }
+  }
+
+  cardStyles() {
+    return { 'text-decoration': 'underline' }
   }
 
 }
