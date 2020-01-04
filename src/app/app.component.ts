@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { CourseCardComponent } from './course-card/course-card.component';
+import { Component, ViewChild, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { COURSES } from '../db-data';
 import { Course } from './model/course';
 
@@ -7,20 +8,39 @@ import { Course } from './model/course';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
+
 
   courses = COURSES
 
-  title = COURSES[0].description;
+  @ViewChildren(CourseCardComponent, {read : ElementRef})
+  cards: QueryList<ElementRef>
 
-  course = COURSES[0]
+  constructor() {
 
-  price = 9.992341423545323445
+  }
 
-  startDate = new Date(2000, 0, 1)
+  ngAfterViewInit(): void {
+
+
+  }
+
+  onCoursesEditied() {
+    this.courses.push(
+      {
+        id: 1,
+        description: "Angular Core Deep Dive",
+        iconUrl: 'https://s3-us-west-1.amazonaws.com/angular-university/course-images/rxjs-in-practice-course.png',
+        longDescription: "A detailed walk-through of the most important part of Angular - the Core and Common modules",
+        category: 'INTERMEDIATE',
+        lessonsCount: 10
+      }
+    )
+  }
+
 
   onCourseSelected(course: Course) {
-    console.log("App Component - click event bubbled...", course)
+
   }
 
 }
