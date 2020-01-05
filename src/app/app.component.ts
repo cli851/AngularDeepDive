@@ -1,9 +1,10 @@
-import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {COURSES} from '../db-data';
-import {Course} from './model/course';
-import {CourseCardComponent} from './course-card/course-card.component';
-import {HighlightedDirective} from './directives/highlighted.directive';
-import {Observable} from 'rxjs';
+import { CoursesService } from './services/courses.service';
+import { Observable } from 'rxjs';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { COURSES } from '../db-data';
+
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Course } from './model/course';
 
 @Component({
   selector: 'app-root',
@@ -13,13 +14,20 @@ import {Observable} from 'rxjs';
 export class AppComponent implements OnInit {
 
 
-  courses = COURSES;
+  courses$: Observable<Course[]>
 
-  constructor() {
+  constructor(private coursesService: CoursesService) {
 
   }
 
   ngOnInit() {
+
+    this.courses$ = this.coursesService.loadCourses()
+
+  }
+
+  save(course: Course){
+    this.coursesService.saveCourse(course)
   }
 
 
